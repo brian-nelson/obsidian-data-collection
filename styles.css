@@ -1,4 +1,30 @@
-/* Sets all the text color to red! */
-body {
-    color: red;
+.dcf_title_row {
+    height: 40px;
+}
+
+.dcf_title_text {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.dcf_field_group {
+    height: 60px;
+}
+
+.dcf_field_title {
+    font-size: medium;
+    font-weight: bold;
+}
+
+.dcf_field_entry {
+
+}
+
+.dcf_button_row {
+    height: 40px;
+}
+
+.dcf_button {
+    font-size: medium;
+    font-weight: bold;
 }
