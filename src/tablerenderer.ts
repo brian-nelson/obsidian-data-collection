@@ -28,6 +28,15 @@ export class TableRenderer extends MarkdownRenderChild {
                     const headerCell = tr.createEl('th');
                     headerCell.innerText = field.displayName;
                 }
+
+                for (const dataObject of dataObjects) {
+                    const tr = tableElement.createEl('tr');
+
+                    for (const field of this.tableSpec.fields) {
+                        const headerCell = tr.createEl('td');
+                        headerCell.innerText = dataObject[field.name];
+                    }
+                }
             })
             .catch(e => {
                 console.log(e.message);
