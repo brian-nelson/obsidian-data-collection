@@ -25,7 +25,13 @@ export class TableRenderer extends MarkdownRenderChild {
                 const tr = tableElement.createEl('tr');
 
                 for (const field of this.tableSpec.fields) {
-                    const headerCell = tr.createEl('th');
+                    let headerStyle:string = "";
+                    if (field.headerStyle != null) {
+                        headerStyle = field.headerStyle;
+                    }
+
+                    const headerCell = tr.createEl('th',
+                        { attr: {style:headerStyle}});
                     headerCell.innerText = field.displayName;
                 }
 
@@ -33,7 +39,13 @@ export class TableRenderer extends MarkdownRenderChild {
                     const tr = tableElement.createEl('tr');
 
                     for (const field of this.tableSpec.fields) {
-                        const headerCell = tr.createEl('td');
+                        let fieldStyle:string = "";
+                        if (field.fieldStyle != null) {
+                            fieldStyle = field.fieldStyle;
+                        }
+
+                        const headerCell = tr.createEl('td',
+                            { attr: {style:fieldStyle}});
                         headerCell.innerText = dataObject[field.name];
                     }
                 }

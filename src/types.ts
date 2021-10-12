@@ -21,6 +21,9 @@ export interface TableField {
     name: string
     type: string
     displayName: string
+    headerStyle?: string
+    fieldStyle?: string
+    fieldFormat?: string
 }
 
 export interface SplitDataFileDefinition {
