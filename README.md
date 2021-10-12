@@ -1,7 +1,4 @@
-## Obsidian From Data Plugin
-
-
-
+## Obsidian Data Collection Plugin
 
 
 ### How to use

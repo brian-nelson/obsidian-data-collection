@@ -1,7 +1,8 @@
 import {parseYaml, Plugin} from 'obsidian';
-import {FormSpec, GraphSpec} from "./types";
+import {FormSpec, GraphSpec, TableSpec} from "./types";
 import {FormRenderer} from "./formrenderer";
 import {GraphRenderer} from "./graphrenderer"
+import {TableRenderer} from "./tablerenderer";
 
 export default class ObsidianDataCollection extends Plugin {
 	async onload() {
@@ -50,6 +51,30 @@ export default class ObsidianDataCollection extends Plugin {
 				}
 
 				ctx.addChild(new GraphRenderer(this.app, graphSpec, element));
+			} catch (e) {
+				console.log(e);
+				return;
+			}
+		});
+
+		this.registerMarkdownCodeBlockProcessor("datacollection-table", async (specification: string,
+																			  element, ctx) => {
+			try {
+				let tableSpec: TableSpec = {
+					source: ''
+				};
+
+				try {
+					tableSpec = parseYaml(specification);
+				} catch (e1) {
+					throw new Error(`Could not parse Form Spec: ${e1.message}`);
+				}
+
+				if (!tableSpec.source) {
+					throw new Error("Parameter 'source' is required.");
+				}
+
+				ctx.addChild(new TableRenderer(this.app, tableSpec, element));
 			} catch (e) {
 				console.log(e);
 				return;

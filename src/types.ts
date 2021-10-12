@@ -17,6 +17,12 @@ export interface GraphField {
     dataColor?: string
 }
 
+export interface TableField {
+    name: string
+    type: string
+    displayName: string
+}
+
 export interface SplitDataFileDefinition {
     fieldName: string
     splitType: string
@@ -35,6 +41,12 @@ export interface GraphSpec {
     type: string
     title?: string
     fields?: GraphField[]
+}
+
+export interface TableSpec {
+    source: string
+    title?: string
+    fields?: TableField[]
 }
 
 export interface ScatterField {

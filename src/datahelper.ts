@@ -38,7 +38,7 @@ export class DataHelper {
     }
 
     static getLabelsArrayAsDates(data:DataObject[], field:GraphField) : any[] {
-        let array:any[] = [];
+        let output:any[] = [];
 
         for (let i = 0; i < data.length; i++) {
 
@@ -47,17 +47,13 @@ export class DataHelper {
 
                 let temp = row[field.name];
                 let dateValue = Date.parse(temp);
-                array.push(dateValue.valueOf());
+                output.push(dateValue.valueOf());
             } catch (e) {
                 console.log(e.message);
             }
-
-            const row = data[i];
-
-            array.push(row[field.name]);
         }
 
-        return array;
+        return output;
     }
 
     static getDataArray(data:DataObject[], field:GraphField) : number[] {

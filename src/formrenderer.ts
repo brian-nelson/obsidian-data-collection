@@ -97,7 +97,6 @@ export class FormRenderer extends MarkdownRenderChild {
         const newData:DataObject = {};
 
         if (this.formSpec.fields !== null) {
-
             for (const field of this.formSpec.fields) {
                 const element = document.getElementById(this.ID_PREFIX + field.name);
 
