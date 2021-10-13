@@ -18,11 +18,13 @@ export class JsonView extends FileView {
     }
 
     async onLoadFile(file: TFile) : Promise<void> {
-        console.log(file);
+        console.log("Loaded json file");
 
         this.repo.ReadData(file.path)
             .then(data => {
-                this.wrapperEl.innerText = JSON.stringify(data, null, 4);
+                let codeEl = this.wrapperEl.createEl("pre");
+                let json = JSON.stringify(data, null, 2);
+                codeEl.innerText = json;
             })
             .catch(e => {
                 console.log(e.message);
