@@ -20,7 +20,7 @@ export class DataRepo implements Repo {
                                 reject("Unable to parse file.");
                             });
                     } else {
-                        let array : DataObject[];
+                        let array : DataObject[] = [];
                         resolve(array);
                     }
                 })
