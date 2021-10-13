@@ -5,7 +5,7 @@ import { Chart, ArcElement, LineElement, BarElement, PointElement, BarController
          DoughnutController, LineController, PieController, PolarAreaController, RadarController,
          ScatterController, CategoryScale, LinearScale, LogarithmicScale, RadialLinearScale, TimeScale,
          TimeSeriesScale, Decimation, Filler, Legend, Title, Tooltip } from 'chart.js';
-import {ChartFactory} from "./chartfactory";
+import {ChartFactory} from "./chartFactory";
 import 'chartjs-adapter-moment';
 
 export class GraphRenderer extends MarkdownRenderChild {

@@ -1,6 +1,6 @@
 import {DataObject, GraphField, GraphSpec, ScatterField} from "./types";
 import {Chart} from "chart.js";
-import {DataHelper} from "./datahelper";
+import {DataHelper} from "./dataHelper";
 
 export class ChartFactory{
     static getChart(graphSpec:GraphSpec,

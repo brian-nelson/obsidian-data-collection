@@ -1,12 +1,20 @@
 import {parseYaml, Plugin} from 'obsidian';
 import {FormSpec, GraphSpec, TableSpec} from "./types";
-import {FormRenderer} from "./formrenderer";
-import {GraphRenderer} from "./graphrenderer"
-import {TableRenderer} from "./tablerenderer";
+import {FormRenderer} from "./formRenderer";
+import {GraphRenderer} from "./graphRenderer"
+import {TableRenderer} from "./tableRenderer";
+import {JsonView} from "./jsonView";
 
 export default class ObsidianDataCollection extends Plugin {
 	async onload() {
-		console.log('loading Obsidian Form Data plugin');
+		super.onload();
+
+		const JSON_VIEW_TYPE:string = 'data-collection-json';
+
+		console.log('loading Obsidian Data Collection plugin');
+
+		this.registerView(JSON_VIEW_TYPE, (leaf)=>  new JsonView(leaf, this));
+		this.registerExtensions(["json"], JSON_VIEW_TYPE);
 
 		this.registerMarkdownCodeBlockProcessor("datacollection-form", async (specification: string,
 				   element, ctx) => {
