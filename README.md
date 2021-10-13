@@ -11,7 +11,7 @@ This Obsidian plugin allows for the creation and population of json data files.
 
 ### Manually installing the plugin
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/obsidian-form-data/`.
+- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/obsidian-data-collection/`.
 
 ### Configure Data Collection Form
 
