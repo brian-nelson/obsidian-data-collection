@@ -82,9 +82,9 @@ NOTE - Only two data sets are currently supported (X, Y)
 	  axis: y
 	  displayName: Weight (lbs)
 	  dataColor: rgb(75, 192, 192)
-```
+	```
 
-Type Options that are currently supported.
+Chart Type Options that are currently supported.
 * bar
 * line
 * scatter
