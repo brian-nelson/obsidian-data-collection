@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-data-collection",
 	"name": "Data Collection and Viewer",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"minAppVersion": "0.9.12",
 	"description": "This is a set of data collection and viewing tools for Obsidian.  Data is collected into JSON files.",
 	"author": "Brian Nelson",
