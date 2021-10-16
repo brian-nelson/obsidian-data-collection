@@ -13,9 +13,17 @@ This Obsidian plugin allows for the creation and population of json data files.
 
 - Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/obsidian-data-collection/`.
 
+### Viewing JSON Files
+
+The plugin registers an extension and viewer for .json files.
+
+![View of Json](images/weight_data.png "Weight Data File")
+
+
+
 ### Configure Data Collection Form
 
-The following example is designed to collect a daily weight measurement and add it to the my_weight_data.json file in the data folder.
+The following example is designed to collect a daily weight measurement and add it to the my_weight_data.json file in the data folder.  YAML format is used to specify the form.
 
 	```datacollection-form
 	title: Daily Weight
@@ -31,6 +39,11 @@ The following example is designed to collect a daily weight measurement and add 
 	  displayName: Weight (lbs)
 	  defaultValue: 0
 	```
+
+Here is a view of the form that is created.
+
+![Data Input Form](images/weight_tracker_form.png "Weight Tracker Form")
+
 
 The following is an example of the JSON data file that is created by the form.
 
@@ -64,7 +77,7 @@ The following is an example of the JSON data file that is created by the form.
 
 ### Configure a Graph
 
-The following example creates a graph from the data in the my_weight_data.json file.
+The following example creates a graph from the data in the my_weight_data.json file.  YAML formatted information is used to specify the graph.
 
 NOTE - Only two data sets are currently supported (X, Y)
 
@@ -90,14 +103,18 @@ Chart Type Options that are currently supported.
 * scatter
 * timeseries
 
+Here is an example of the chart that is generated.
+
+![Chart of Data](images/weight_tracker_chart.png "Weight Tracker Chart")
+
 
 ### Configure a Table
 
-The following example creates a table from the data in the my_weight_data.json file.
+The following example creates a table from the data in the my_weight_data.json file.  YAML formatted information is used to specify the format of the table.
 
 	```datacollection-table
 	title: Weight entries
-	source: Folder3/Data/mydata.json
+	source: Data/my_weight_data.json
 	fields:
 	- type: date
 	  name: EntryDate
@@ -110,3 +127,6 @@ The following example creates a table from the data in the my_weight_data.json f
 	  headerStyle: "text-align: center;width:200px;"
 	  fieldStyle: "text-align: left;"
 	```
+Here is an example of the chart that is generated.
+
+![Table of Data](images/weight_tracker_table.png "Weight Tracker Table")
