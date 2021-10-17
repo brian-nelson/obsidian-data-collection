@@ -44,6 +44,22 @@ Here is a view of the form that is created.
 
 ![Data Input Form](images/weight_tracker_form.png "Weight Tracker Form")
 
+#### Form Level Settings
+* title - (optional) - The form's title
+* source - The json file to save data into
+* buttonText - (optional) Text on the save button.
+* requiredFieldMessage - (optional)  Message to display when a field is not populated.
+* recordSavedMessage - (optional) Message to display on save.
+* fields - List of fields to collect data on.
+
+#### Form Field Settings
+* type - Type of field
+* name - Field name to store in the JSON file
+* displayName - Field name to display
+* defaultValue - Value to set when the form loads
+* required - (Optional) Indicates if the field is required.  Defaults to false.  If required is set then an asterisk is added to the display name.
+
+I am using using these forms with the [Force note view mode](https://github.com/bwydoogh/obsidian-force-view-mode-of-note) plugin.
 
 The following is an example of the JSON data file that is created by the form.
 
