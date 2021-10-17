@@ -1,5 +1,5 @@
-import {App, MarkdownRenderChild} from 'obsidian';
-import {DataObject, FormSpec} from "./types";
+import {App, MarkdownRenderChild, Notice} from 'obsidian';
+import {DataObject, FormField, FormSpec} from "./types";
 import {DataRepo} from "./repos";
 
 export class FormRenderer extends MarkdownRenderChild {
@@ -35,7 +35,13 @@ export class FormRenderer extends MarkdownRenderChild {
 
                 const fieldTitleElement = row.createEl('div');
                 fieldTitleElement.className = this.ID_PREFIX + "field_title";
-                fieldTitleElement.innerText = field.displayName;
+
+                if (field.required == undefined
+                    || !field.required) {
+                    fieldTitleElement.innerText = field.displayName;
+                } else {
+                    fieldTitleElement.innerText = field.displayName + "*";
+                }
 
                 const fieldDataElement = row.createEl('div');
                 fieldDataElement.className = this.ID_PREFIX + "field_entry";
@@ -43,34 +49,23 @@ export class FormRenderer extends MarkdownRenderChild {
                     let input = fieldDataElement.createEl("input");
                     input.id = this.ID_PREFIX + field.name;
                     input.type = 'date'
-
-                    if (field.defaultValue != null) {
-                        if (field.defaultValue == 'today') {
-                            input.valueAsDate = new Date();
-                        } else if (field.defaultValue == 'tomorrow') {
-                            let tomorrow = new Date();
-                            tomorrow.setDate(tomorrow.getDate() + 1);
-                            input.valueAsDate = tomorrow;
-                        } else if (field.defaultValue == 'yesterday') {
-                            let yesterday = new Date();
-                            yesterday.setDate(yesterday.getDate() - 1);
-                            input.valueAsDate = yesterday;
-                        } else {
-                            input.value = field.defaultValue;
-                        }
-                    }
+                    this.setDefaultDateValue(field.defaultValue, input);
+                    this.setRequired(field, input);
                 } else if (field.type == 'string') {
                     let input = fieldDataElement.createEl("input");
                     input.id = this.ID_PREFIX + field.name;
                     input.type = 'text'
+                    this.setRequired(field, input);
                 } else if (field.type == 'double') {
                     let input = fieldDataElement.createEl("input");
                     input.id = this.ID_PREFIX + field.name;
                     input.type = 'number'
+                    this.setRequired(field, input);
                 } else if (field.type == 'int') {
                     let input = fieldDataElement.createEl("input");
                     input.id = this.ID_PREFIX + field.name;
                     input.type = 'number'
+                    this.setRequired(field, input);
                 }
             }
 
@@ -93,19 +88,69 @@ export class FormRenderer extends MarkdownRenderChild {
         }
     }
 
+    setRequired(field:FormField, input:HTMLInputElement){
+        input.required = !(field.required == undefined
+            || !field.required);
+    }
+
+    setDefaultDateValue(defaultValue:string, input:HTMLInputElement) {
+        if (defaultValue != null) {
+            if (defaultValue == 'today') {
+                input.valueAsDate = new Date();
+            } else if (defaultValue == 'tomorrow') {
+                let tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                input.valueAsDate = tomorrow;
+            } else if (defaultValue == 'yesterday') {
+                let yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                input.valueAsDate = yesterday;
+            } else {
+                input.value = defaultValue;
+            }
+        }
+    }
+
     async SaveData() {
         const newData:DataObject = {};
+
+        let missingRequiredField:boolean = false;
 
         if (this.formSpec.fields !== null) {
             for (const field of this.formSpec.fields) {
                 const element = document.getElementById(this.ID_PREFIX + field.name);
 
                 if (element != null) {
-                    newData[field.name] = (element as HTMLInputElement).value;
+                    let value:any = (element as HTMLInputElement).value;
+
+                    if (field.required
+                        && (value == null || value =="")) {
+                        missingRequiredField = true;
+                    }
+
+                    if (field.type == 'date') {
+                        newData[field.name] = value;
+                    } else {
+                        newData[field.name] = value;
+                    }
                 } else {
                     newData[field.name] = null;
+
+                    if (field.required) {
+                      missingRequiredField = true;
+                    }
                 }
             }
+        }
+
+        if (missingRequiredField) {
+            if (this.formSpec.requiredFieldMessage != null) {
+                new Notice(this.formSpec.requiredFieldMessage, 5000);
+            } else {
+                new Notice("A required field is missing a value", 5000);
+            }
+
+            return;
         }
 
         console.log(newData);
@@ -114,7 +159,11 @@ export class FormRenderer extends MarkdownRenderChild {
             .then( () => {
                 console.log("Data saved");
 
-                alert("Saved");
+                if (this.formSpec.recordSavedMessage != undefined) {
+                    new Notice(this.formSpec.recordSavedMessage);
+                } else {
+                    new Notice("Record Saved");
+                }
             })
             .catch(e => {
                console.log(e.message);

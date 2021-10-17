@@ -25,6 +25,14 @@ export default class ObsidianDataCollection extends Plugin {
 
 					try {
 						formSpec = parseYaml(specification);
+
+						// Fix any missing values
+						for (const field of formSpec.fields) {
+							if (field.required == undefined) {
+								field.required = false;
+							}
+						}
+
 					} catch (e1) {
 						throw new Error(`Could not parse Form Spec: ${e1.message}`);
 					}
@@ -60,7 +68,7 @@ export default class ObsidianDataCollection extends Plugin {
 
 				ctx.addChild(new GraphRenderer(this.app, graphSpec, element));
 			} catch (e) {
-				console.log(e);
+				console.log(e.message);
 				return;
 			}
 		});

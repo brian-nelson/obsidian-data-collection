@@ -7,6 +7,7 @@ export interface FormField {
     type: string
     displayName: string
     defaultValue: string
+    required?: boolean
 }
 
 export interface GraphField {
@@ -37,6 +38,8 @@ export interface FormSpec {
     fields?: FormField[]
     splitDataFileBy?: SplitDataFileDefinition
     buttonText?: string
+    requiredFieldMessage?:string
+    recordSavedMessage?:string
 }
 
 export interface GraphSpec {
