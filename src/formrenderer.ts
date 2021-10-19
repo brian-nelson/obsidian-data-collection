@@ -3,12 +3,13 @@ import {DataObject, FormField, FormSpec} from "./types";
 import {DataRepo} from "./repos";
 
 export class FormRenderer extends MarkdownRenderChild {
-    ID_PREFIX:string = "dcf_";
+    ID_PREFIX: string;
     repo: DataRepo;
 
     constructor(public app: App, public formSpec: FormSpec, public container: HTMLElement) {
         super(container)
 
+        this.ID_PREFIX = "dcf_";
         this.repo = new DataRepo(app.vault);
     }
 
@@ -155,7 +156,7 @@ export class FormRenderer extends MarkdownRenderChild {
 
         console.log(newData);
 
-        this.repo.AppendData(this.formSpec, newData)
+        this.repo.AppendData(this.formSpec.source, newData, this.formSpec.sortOnSave)
             .then( () => {
                 console.log("Data saved");
 

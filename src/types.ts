@@ -77,6 +77,6 @@ export interface Repo {
     WriteData(filename:string,  dataRows:DataObject[]) : Promise<void>;
 
     //This method can also sort
-    AppendData(formSpec:FormSpec, data:DataObject) : Promise<void>;
+    AppendData(filename:string, newData:DataObject, sortOnSave:FieldSort) : Promise<void>;
 }
 

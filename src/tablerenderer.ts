@@ -1,14 +1,15 @@
 import {App, MarkdownRenderChild} from 'obsidian';
-import {DataObject, TableSpec} from "./types";
+import {TableSpec} from "./types";
 import {DataRepo} from "./repos";
 
 export class TableRenderer extends MarkdownRenderChild {
-    ID_PREFIX:string = "dct_";
+    ID_PREFIX:string;
     repo: DataRepo;
 
     constructor(public app: App, public tableSpec: TableSpec, public container: HTMLElement) {
         super(container)
 
+        this.ID_PREFIX = "dct_";
         this.repo = new DataRepo(app.vault);
     }
 

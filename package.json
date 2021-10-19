@@ -1,7 +1,7 @@
 {
   "name": "obsidian-data-collection",
   "version": "0.1.2",
-  "description": "This plugin allows structured data collection.",
+  "description": "This plugin allows structured data collection that is stored in JSON files.",
   "main": "main.js",
   "scripts": {
     "dev": "rollup --config rollup.config.js -w",

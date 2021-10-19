@@ -1,6 +1,5 @@
 import {Vault} from "obsidian";
-import {DataObject, FieldSort, FormField, FormSpec, Repo} from "./types";
-import {DataHelper} from "./dataHelper";
+import {DataObject, FieldSort, Repo} from "./types";
 
 export class DataRepo implements Repo {
 
@@ -45,8 +44,7 @@ export class DataRepo implements Repo {
         });
     }
 
-    async AppendData(formSpec:FormSpec, newData:DataObject) : Promise<void> {
-        let filename = formSpec.source;
+    async AppendData(filename:string, newData:DataObject, sortOnSave:FieldSort) : Promise<void> {
 
         return new Promise<void>( (resolve, reject) => {
             // Load the data
@@ -55,12 +53,11 @@ export class DataRepo implements Repo {
                     array.push(newData);
 
                     //Sort array if required
-                    if (formSpec.sortOnSave != undefined) {
-                        let sortField:string = formSpec.sortOnSave.sortFieldName;
-                        let sortDirection:string = formSpec.sortOnSave.sortDirection;
-                        let field:FormField = DataHelper.findFormField(formSpec.fields, sortField);
+                    if (sortOnSave != undefined) {
+                        let sortField:string = sortOnSave.sortFieldName;
+                        let sortDirection:string = sortOnSave.sortDirection;
 
-                        if (field != null) {
+                        if (sortField != null) {
                             if (sortDirection === "desc") {
                                 array = array.sort((a:DataObject,b:DataObject)=>{
                                     if (a[sortField] < b[sortField] ){
