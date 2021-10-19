@@ -1,6 +1,6 @@
 {
   "name": "obsidian-data-collection",
-  "version": "0.12.0",
+  "version": "0.1.2",
   "description": "This plugin allows structured data collection.",
   "main": "main.js",
   "scripts": {

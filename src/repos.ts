@@ -1,5 +1,6 @@
 import {Vault} from "obsidian";
-import {DataObject, Repo} from "./types";
+import {DataObject, FieldSort, FormField, FormSpec, Repo} from "./types";
+import {DataHelper} from "./dataHelper";
 
 export class DataRepo implements Repo {
 
@@ -44,11 +45,49 @@ export class DataRepo implements Repo {
         });
     }
 
-    async AppendData(filename:string, newData:DataObject) : Promise<void> {
+    async AppendData(formSpec:FormSpec, newData:DataObject) : Promise<void> {
+        let filename = formSpec.source;
+
         return new Promise<void>( (resolve, reject) => {
+            // Load the data
             this.ReadData(filename)
                 .then(array => {
                     array.push(newData);
+
+                    //Sort array if required
+                    if (formSpec.sortOnSave != undefined) {
+                        let sortField:string = formSpec.sortOnSave.sortFieldName;
+                        let sortDirection:string = formSpec.sortOnSave.sortDirection;
+                        let field:FormField = DataHelper.findFormField(formSpec.fields, sortField);
+
+                        if (field != null) {
+                            if (sortDirection === "desc") {
+                                array = array.sort((a:DataObject,b:DataObject)=>{
+                                    if (a[sortField] < b[sortField] ){
+                                        return 1;
+                                    }
+
+                                    if (a[sortField] > b[sortField]) {
+                                        return -1;
+                                    }
+
+                                    return 0;
+                                })
+                            } else {
+                                array = array.sort((a:DataObject,b:DataObject)=>{
+                                    if (a[sortField] > b[sortField] ){
+                                        return 1;
+                                    }
+
+                                    if (a[sortField] < b[sortField]) {
+                                        return -1;
+                                    }
+
+                                    return 0;
+                                })
+                            }
+                        }
+                    }
 
                     this.WriteData(filename, array)
                         .then( () => {
