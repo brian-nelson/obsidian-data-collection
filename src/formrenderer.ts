@@ -155,7 +155,7 @@ export class FormRenderer extends MarkdownRenderChild {
 
         console.log(newData);
 
-        this.repo.AppendData(this.formSpec.source, newData)
+        this.repo.AppendData(this.formSpec, newData)
             .then( () => {
                 console.log("Data saved");
 

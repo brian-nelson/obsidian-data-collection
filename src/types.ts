@@ -32,6 +32,11 @@ export interface SplitDataFileDefinition {
     splitType: string
 }
 
+export interface FieldSort {
+    sortFieldName:string
+    sortDirection:string
+}
+
 export interface FormSpec {
     source: string
     title?: string
@@ -40,6 +45,7 @@ export interface FormSpec {
     buttonText?: string
     requiredFieldMessage?:string
     recordSavedMessage?:string
+    sortOnSave?:FieldSort
 }
 
 export interface GraphSpec {
@@ -66,8 +72,11 @@ export interface AxisRange {
 }
 
 export interface Repo {
+    //These two functions just read and write
     ReadData(filename:string) : Promise<DataObject[]>;
-    AppendData(filename:string, data:DataObject) : Promise<void>;
     WriteData(filename:string,  dataRows:DataObject[]) : Promise<void>;
+
+    //This method can also sort
+    AppendData(formSpec:FormSpec, data:DataObject) : Promise<void>;
 }
 

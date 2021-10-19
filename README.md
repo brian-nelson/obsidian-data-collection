@@ -50,6 +50,9 @@ Here is a view of the form that is created.
 * buttonText - (optional) Text on the save button.
 * requiredFieldMessage - (optional)  Message to display when a field is not populated.
 * recordSavedMessage - (optional) Message to display on save.
+* sortOnSave - (optional) Indicates if the array should be sorted on save.
+  * sortFieldName - Field to sort the array on
+  * sortDirection - asc or desc
 * fields - List of fields to collect data on.
 
 #### Form Field Settings
