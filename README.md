@@ -55,6 +55,8 @@ Here is a view of the form that is created.
   * sortDirection - asc or desc
 * fields - List of fields to collect data on.
 
+Note - Sorting on every save will may cause performance issues
+
 #### Form Field Settings
 * type - Type of field
 * name - Field name to store in the JSON file
