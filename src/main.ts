@@ -41,7 +41,7 @@ export default class ObsidianDataCollection extends Plugin {
                     throw new Error("Parameter 'source' is required.");
                 }
 
-                //ctx.addChild(new FormRenderer(this.app, formSpec, element));
+                ctx.addChild(new FormRenderer(this.app, formSpec, element));
             } catch (e) {
                 console.log(e);
                 return;

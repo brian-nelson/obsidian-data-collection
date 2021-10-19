@@ -16,7 +16,7 @@ export class DataRepo implements Repo {
                                 const array = JSON.parse(contents);
                                 resolve(array);
                             })
-                            .catch(e2 => {
+                            .catch(() => {
                                 reject("Unable to parse file.");
                             });
                     } else {
@@ -24,7 +24,7 @@ export class DataRepo implements Repo {
                         resolve(array);
                     }
                 })
-                .catch(e => {
+                .catch(() => {
                     reject("Error reading file.");
                 });
         });
@@ -38,7 +38,7 @@ export class DataRepo implements Repo {
                 .then(() => {
                     resolve();
                 })
-                .catch(e2 => {
+                .catch(() => {
                     reject("Unable to write file.");
                 });
         });
@@ -90,11 +90,11 @@ export class DataRepo implements Repo {
                         .then( () => {
                             resolve();
                         })
-                        .catch(e => {
+                        .catch(() => {
                             reject("Unable to write appended data.");
                         });
                 })
-                .catch(e => {
+                .catch(() => {
                     reject("Unable to append data.");
                 });
         });

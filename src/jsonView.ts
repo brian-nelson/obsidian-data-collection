@@ -23,8 +23,7 @@ export class JsonView extends FileView {
         this.repo.ReadData(file.path)
             .then(data => {
                 let codeEl = this.wrapperEl.createEl("pre");
-                let json = JSON.stringify(data, null, 2);
-                codeEl.innerText = json;
+                codeEl.innerText = JSON.stringify(data, null, 2);
             })
             .catch(e => {
                 console.log(e.message);
