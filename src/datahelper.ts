@@ -1,17 +1,6 @@
-import {AxisRange, DataObject, FormField, GraphField, ScatterField} from "./types";
+import {AxisRange, DataObject, GraphField, ScatterField} from "./types";
 
 export class DataHelper {
-    static findFormField(fields: FormField[], fieldName:string) : FormField{
-        for (let i = 0; i < fields.length; i++) {
-            let field:FormField = fields[i];
-            if (fieldName === field.name) {
-                return field;
-            }
-        }
-
-        return null;
-    }
-
     static getLabelField(fields: GraphField[]) : GraphField {
         for (let i = 0; i < fields.length; i++) {
             const field:GraphField = fields[i];

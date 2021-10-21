@@ -2,15 +2,15 @@ import {App, MarkdownRenderChild, Notice} from 'obsidian';
 import {DataObject, FormField, FormSpec} from "./types";
 import {DataRepo} from "./repos";
 
-export class FormRenderer extends MarkdownRenderChild {
-    ID_PREFIX: string;
-    repo: DataRepo;
+export class DataFormRenderer extends MarkdownRenderChild {
+    private ID_PREFIX: string;
+    private repo: DataRepo;
 
     constructor(public app: App, public formSpec: FormSpec, public container: HTMLElement) {
         super(container)
 
-        this.ID_PREFIX = "dcf_";
-        this.repo = new DataRepo(app.vault);
+        //this.ID_PREFIX = "dcf_";
+        //this.repo = new DataRepo(app.vault);
     }
 
     async onload() {
@@ -156,7 +156,15 @@ export class FormRenderer extends MarkdownRenderChild {
 
         console.log(newData);
 
-        this.repo.AppendData(this.formSpec.source, newData, this.formSpec.sortOnSave)
+        let sortField:string = null;
+        let sortDirection:string = null;
+
+        if (this.formSpec.sortOnSave != undefined) {
+            sortField = this.formSpec.sortOnSave.sortField;
+            sortDirection = this.formSpec.sortOnSave.sortDirection;
+        }
+
+        this.repo.AppendData(this.formSpec.source, newData, sortField, sortDirection)
             .then( () => {
                 console.log("Data saved");
 

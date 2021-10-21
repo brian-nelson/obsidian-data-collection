@@ -1,5 +1,5 @@
-import {Vault} from "obsidian";
-import {DataObject, FieldSort, Repo} from "./types";
+import { Vault } from "obsidian";
+import { DataObject, Repo } from "./types";
 
 export class DataRepo implements Repo {
 
@@ -16,7 +16,7 @@ export class DataRepo implements Repo {
                                 const array = JSON.parse(contents);
                                 resolve(array);
                             })
-                            .catch(e2 => {
+                            .catch(() => {
                                 reject("Unable to parse file.");
                             });
                     } else {
@@ -24,7 +24,7 @@ export class DataRepo implements Repo {
                         resolve(array);
                     }
                 })
-                .catch(e => {
+                .catch(() => {
                     reject("Error reading file.");
                 });
         });
@@ -38,13 +38,13 @@ export class DataRepo implements Repo {
                 .then(() => {
                     resolve();
                 })
-                .catch(e2 => {
+                .catch(() => {
                     reject("Unable to write file.");
                 });
         });
     }
 
-    async AppendData(filename:string, newData:DataObject, sortOnSave:FieldSort) : Promise<void> {
+    async AppendData(filename:string, newData:DataObject, sortField:string, sortDirection:string) : Promise<void> {
 
         return new Promise<void>( (resolve, reject) => {
             // Load the data
@@ -53,36 +53,31 @@ export class DataRepo implements Repo {
                     array.push(newData);
 
                     //Sort array if required
-                    if (sortOnSave != undefined) {
-                        let sortField:string = sortOnSave.sortFieldName;
-                        let sortDirection:string = sortOnSave.sortDirection;
+                    if (sortField != null) {
+                        if (sortDirection === "desc") {
+                            array = array.sort((a: DataObject, b: DataObject) => {
+                                if (a[sortField] < b[sortField]) {
+                                    return 1;
+                                }
 
-                        if (sortField != null) {
-                            if (sortDirection === "desc") {
-                                array = array.sort((a:DataObject,b:DataObject)=>{
-                                    if (a[sortField] < b[sortField] ){
-                                        return 1;
-                                    }
+                                if (a[sortField] > b[sortField]) {
+                                    return -1;
+                                }
 
-                                    if (a[sortField] > b[sortField]) {
-                                        return -1;
-                                    }
+                                return 0;
+                            });
+                        } else {
+                            array = array.sort((a: DataObject, b: DataObject) => {
+                                if (a[sortField] > b[sortField]) {
+                                    return 1;
+                                }
 
-                                    return 0;
-                                })
-                            } else {
-                                array = array.sort((a:DataObject,b:DataObject)=>{
-                                    if (a[sortField] > b[sortField] ){
-                                        return 1;
-                                    }
+                                if (a[sortField] < b[sortField]) {
+                                    return -1;
+                                }
 
-                                    if (a[sortField] < b[sortField]) {
-                                        return -1;
-                                    }
-
-                                    return 0;
-                                })
-                            }
+                                return 0;
+                            });
                         }
                     }
 
@@ -90,11 +85,11 @@ export class DataRepo implements Repo {
                         .then( () => {
                             resolve();
                         })
-                        .catch(e => {
+                        .catch(() => {
                             reject("Unable to write appended data.");
                         });
                 })
-                .catch(e => {
+                .catch(() => {
                     reject("Unable to append data.");
                 });
         });

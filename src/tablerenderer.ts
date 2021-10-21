@@ -3,7 +3,7 @@ import {TableSpec} from "./types";
 import {DataRepo} from "./repos";
 
 export class TableRenderer extends MarkdownRenderChild {
-    ID_PREFIX:string;
+    ID_PREFIX: string;
     repo: DataRepo;
 
     constructor(public app: App, public tableSpec: TableSpec, public container: HTMLElement) {
@@ -24,6 +24,7 @@ export class TableRenderer extends MarkdownRenderChild {
 
                 const tableElement = outerElement.createEl('table');
                 const tr = tableElement.createEl('tr');
+                tr.id = this.ID_PREFIX + "tr_0";
 
                 for (const field of this.tableSpec.fields) {
                     let headerStyle:string = "";
@@ -36,8 +37,10 @@ export class TableRenderer extends MarkdownRenderChild {
                     headerCell.innerText = field.displayName;
                 }
 
+                let i = 1;
                 for (const dataObject of dataObjects) {
                     const tr = tableElement.createEl('tr');
+                    tr.id = this.ID_PREFIX + `tr_${i}`;
 
                     for (const field of this.tableSpec.fields) {
                         let fieldStyle:string = "";
@@ -54,6 +57,5 @@ export class TableRenderer extends MarkdownRenderChild {
             .catch(e => {
                 console.log(e.message);
             });
-
     }
 }

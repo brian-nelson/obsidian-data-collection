@@ -33,7 +33,7 @@ export interface SplitDataFileDefinition {
 }
 
 export interface FieldSort {
-    sortFieldName:string
+    sortField:string
     sortDirection:string
 }
 
@@ -77,6 +77,6 @@ export interface Repo {
     WriteData(filename:string,  dataRows:DataObject[]) : Promise<void>;
 
     //This method can also sort
-    AppendData(filename:string, newData:DataObject, sortOnSave:FieldSort) : Promise<void>;
+    AppendData(filename:string, newData:DataObject, sortField:string, sortDirection:string) : Promise<void>;
 }
 
