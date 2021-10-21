@@ -39,7 +39,7 @@ export class GraphRenderer extends MarkdownRenderChild {
 
                 let context2D = chartElement.getContext('2d');
 
-                let myChart = ChartFactory.getChart(
+                ChartFactory.getChart(
                     this.graphSpec,
                     dataObjects,
                     context2D);

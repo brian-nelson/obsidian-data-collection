@@ -1,6 +1,6 @@
 import {parseYaml, Plugin} from 'obsidian';
-import {FormSpec, GraphSpec, TableSpec} from "./types";
-import {FormRenderer} from "./formRenderer";
+import {FormSpec , GraphSpec, TableSpec} from "./types";
+import {DataFormRenderer} from "./formRenderer";
 import {GraphRenderer} from "./graphRenderer"
 import {TableRenderer} from "./tableRenderer";
 import {JsonView} from "./jsonView";
@@ -34,14 +34,16 @@ export default class ObsidianDataCollection extends Plugin {
                     }
 
                 } catch (e1) {
-                    throw new Error(`Could not parse Form Spec: ${e1.message}`);
+                    console.log(`Could not parse Form Spec: ${e1.message}`);
+                    return;
                 }
 
                 if (!formSpec.source) {
-                    throw new Error("Parameter 'source' is required.");
+                    console.log("Parameter 'source' is required.");
+                    return;
                 }
 
-                //ctx.addChild(new FormRenderer(this.app, formSpec, element));
+                ctx.addChild(new DataFormRenderer(this.app, formSpec, element));
             } catch (e) {
                 console.log(e);
                 return;
@@ -59,11 +61,13 @@ export default class ObsidianDataCollection extends Plugin {
                 try {
                     graphSpec = parseYaml(specification);
                 } catch (e1) {
-                    throw new Error(`Could not parse Graph Spec: ${e1.message}`);
+                    console.log(`Could not parse Graph Spec: ${e1.message}`);
+                    return;
                 }
 
                 if (!graphSpec.source) {
-                    throw new Error("Parameter 'source' is required.")
+                    console.log("Parameter 'source' is required.")
+                    return;
                 }
 
                 ctx.addChild(new GraphRenderer(this.app, graphSpec, element));
@@ -83,11 +87,13 @@ export default class ObsidianDataCollection extends Plugin {
                 try {
                     tableSpec = parseYaml(specification);
                 } catch (e1) {
-                    throw new Error(`Could not parse Form Spec: ${e1.message}`);
+                    console.log(`Could not parse Form Spec: ${e1.message}`);
+                    return;
                 }
 
                 if (!tableSpec.source) {
-                    throw new Error("Parameter 'source' is required.");
+                    console.log("Parameter 'source' is required.");
+                    return;
                 }
 
                 ctx.addChild(new TableRenderer(this.app, tableSpec, element));
