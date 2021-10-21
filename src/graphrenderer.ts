@@ -9,8 +9,8 @@ import {ChartFactory} from "./chartFactory";
 import 'chartjs-adapter-moment';
 
 export class GraphRenderer extends MarkdownRenderChild {
-    ID_PREFIX:string;
-    repo: DataRepo;
+    private readonly ID_PREFIX:string;
+    private readonly repo: DataRepo;
 
     constructor(public app: App, public graphSpec: GraphSpec, public container: HTMLElement) {
         super(container)

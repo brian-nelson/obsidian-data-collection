@@ -3,9 +3,9 @@ import ObsidianDataCollection from "./main";
 import {DataRepo} from "./repos";
 
 export class JsonView extends FileView {
-    plugin:ObsidianDataCollection;
-    wrapperEl: HTMLElement;
-    repo: DataRepo;
+    private plugin:ObsidianDataCollection;
+    private wrapperEl: HTMLElement;
+    private repo: DataRepo;
 
     constructor(leaf: WorkspaceLeaf, plugin: ObsidianDataCollection) {
         super(leaf);
