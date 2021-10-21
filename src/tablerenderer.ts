@@ -3,8 +3,8 @@ import {TableSpec} from "./types";
 import {DataRepo} from "./repos";
 
 export class TableRenderer extends MarkdownRenderChild {
-    ID_PREFIX: string;
-    repo: DataRepo;
+    private readonly ID_PREFIX: string;
+    private repo: DataRepo;
 
     constructor(public app: App, public tableSpec: TableSpec, public container: HTMLElement) {
         super(container)

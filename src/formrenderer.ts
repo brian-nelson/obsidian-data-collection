@@ -3,14 +3,14 @@ import {DataObject, FormField, FormSpec} from "./types";
 import {DataRepo} from "./repos";
 
 export class DataFormRenderer extends MarkdownRenderChild {
-    private ID_PREFIX: string;
-    private repo: DataRepo;
+    private readonly ID_PREFIX: string;
+    private readonly repo: DataRepo;
 
     constructor(public app: App, public formSpec: FormSpec, public container: HTMLElement) {
         super(container)
 
-        //this.ID_PREFIX = "dcf_";
-        //this.repo = new DataRepo(app.vault);
+        this.ID_PREFIX = "dcf_";
+        this.repo = new DataRepo(app.vault);
     }
 
     async onload() {
